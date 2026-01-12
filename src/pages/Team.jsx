@@ -1,63 +1,24 @@
 import { motion } from 'framer-motion';
 import { teamData } from '../data/teamData';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import './Team.css';
 
-const TeamCard = ({ member, index, hoveredId, setHoveredId }) => {
-  const [hovered, setHovered] = useState(false);
-  
+const TeamCard = ({ member, index }) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, delay: index * 0.05 }}
       viewport={{ once: true }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="flex flex-col items-center"
     >
-      <motion.div
-        className="relative w-44 h-56 rounded-lg shadow-lg bg-white border border-gray-200 flex flex-col items-center justify-center p-4"
-        whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(34, 211, 238, 0.3)' }}
-        whileTap={{ scale: 0.95 }}
-      >
-        {/* Circular Image */}
-        <div className="w-32 h-32 rounded-full overflow-hidden shadow-md mb-3 border-2 border-cyan-500/30 flex-shrink-0">
-          <img
-            src={member.image}
-            alt={member.name}
-            className="w-full h-full object-cover"
-          />
-        </div>
-
-        {/* Name and Position */}
-        <h3 className="text-center font-semibold text-gray-900 text-xs mb-1">{member.name}</h3>
-        <p className="text-center text-cyan-600 text-xs font-medium mb-3">{member.position}</p>
-
-        {/* Social Icons - Appear on Hover */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 10 }}
-          transition={{ duration: 0.3 }}
-          className="flex gap-2"
-        >
-          <a
-            href={member.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center bg-gray-100 hover:scale-110 transition-transform"
-          >
-            <img src="/src/assets/linkedin.png" alt="LinkedIn" className="w-full h-full object-cover" />
-          </a>
-          <a
-            href={member.instagram || '#'}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center bg-gray-100 hover:scale-110 transition-transform"
-          >
-            <img src="/src/assets/instagram.png" alt="Instagram" className="w-full h-full object-cover" />
-          </a>
-        </motion.div>
-      </motion.div>
+      <figure className="snip1584">
+        <img src={member.image} alt={member.name} />
+        <figcaption>
+          <h3>{member.name}</h3>
+          <h5>{member.position}</h5>
+        </figcaption>
+        <a href="#"></a>
+      </figure>
     </motion.div>
   );
 };
@@ -66,8 +27,6 @@ const Team = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const [hoveredId, setHoveredId] = useState(null);
 
   return (
     <div className="pt-16">
@@ -110,7 +69,7 @@ const Team = () => {
           >
             Final Year
           </motion.h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-20">
+          <div className="flex flex-wrap justify-center gap-6">
             {teamData.filter(m => m.year === 'Final Year').map((member, index) => (
               <TeamCard key={member.id} member={member} index={index} />
             ))}
@@ -126,13 +85,13 @@ const Team = () => {
           >
             Pre Final Year
           </motion.h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-20">
+          <div className="flex flex-wrap justify-center gap-6">
             {teamData.filter(m => m.year === 'Pre Final Year').length > 0 ? (
               teamData.filter(m => m.year === 'Pre Final Year').map((member, index) => (
                 <TeamCard key={member.id} member={member} index={index} />
               ))
             ) : (
-              <p className="text-gray-500 col-span-full text-center">Coming soon...</p>
+              <p className="text-gray-500 text-center">Coming soon...</p>
             )}
           </div>
 
@@ -146,13 +105,13 @@ const Team = () => {
           >
             Second Year
           </motion.h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          <div className="flex flex-wrap justify-center gap-6">
             {teamData.filter(m => m.year === 'Second Year').length > 0 ? (
               teamData.filter(m => m.year === 'Second Year').map((member, index) => (
                 <TeamCard key={member.id} member={member} index={index} />
               ))
             ) : (
-              <p className="text-gray-500 col-span-full text-center">Coming soon...</p>
+              <p className="text-gray-500 text-center">Coming soon...</p>
             )}
           </div>
         </div>
